@@ -42,15 +42,23 @@ public class Board
 
     public int MakeMove(char player, int column)
     {
-        for (var r = fields.Length - 1; r >= 0; r--)
+        if (column < 0 || column >= Board.COLS)
         {
-            if (fields[r][column] == EMPTY)
-            {
-                fields[r][column] = player;
-                return r;
-            }
+            throw new ArgumentOutOfRangeException(nameof(column), "Column is out of range.");
         }
-        return -1;
+        else
+        {
+            for (var r = fields.Length - 1; r >= 0; r--)
+            {
+                if (fields[r][column] == EMPTY)
+                {
+                    fields[r][column] = player;
+                    return r;
+                }
+            }
+            return -1;
+        }
+        
     }
 
     public char Winner(char player, int row, int col)
